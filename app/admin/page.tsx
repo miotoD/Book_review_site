@@ -14,6 +14,7 @@ function page() {
   let [BookName, setBookName] = useState("");
   let [Author, setAuthor] = useState("");
   let [Genre, setGenre] = useState("");
+  let [Body, setBody] = useState("");
 
   let [access, setAccess] = useState(false);
 
@@ -45,6 +46,7 @@ function page() {
     BookName,
     Author,
     Genre,
+    Body,
   };
 
   const URL = "http://localhost:5000/browse/post";
@@ -65,6 +67,7 @@ function page() {
     setBookName("");
     setAuthor("");
     setGenre("");
+    setBody("");
   }
   return (
     <>
@@ -108,7 +111,7 @@ function page() {
 
           <div className="mb-4">
             <h1 className="block text-gray-700 text-sm font-bold mb-2">
-              Password
+              Genre
             </h1>
             <input
               id="Genre"
@@ -117,6 +120,21 @@ function page() {
               value={Genre}
               onChange={(e) => setGenre(e.target.value)}
               placeholder="Genre"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          <div className="mb-4">
+            <h1 className="block text-gray-700 text-sm font-bold mb-2">
+              Content
+            </h1>
+            <input
+              id="Body"
+              name="Body"
+              type="Body"
+              value={Body}
+              onChange={(e) => setBody(e.target.value)}
+              placeholder="content goes here"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>

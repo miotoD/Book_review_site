@@ -11,7 +11,6 @@ import Link from "next/link";
 
 function Browse() {
   let [access, setAccess] = useState(false);
-  let [detailPage, setDetailPage] = useState(false);
   let [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -29,18 +28,11 @@ function Browse() {
     });
   }, []);
 
-  function handleSearch() {
-    const filtered = data.filter((items) => {
-      items.BookName.toLowerCase().includes(search.toLowerCase());
-    });
-  }
-
   let router = useRouter();
 
   function displayPage() {
-    setDetailPage(true);
-    if (detailPage) {
-      router.push("/detailpage");
+    if (!access) {
+      alert("Login required!!");
     }
   }
 
@@ -62,10 +54,7 @@ function Browse() {
           onChange={(event) => setSearch(event.target.value)}
         />
 
-        <button
-          className=" mt-[100px] ml-3 text-white text-[16px] bg-[#00BCD4] rounded-lg hover:bg-[#79deeb] w-[60px]"
-          onClick={handleSearch}
-        >
+        <button className=" mt-[100px] ml-3 text-white text-[16px] bg-[#00BCD4] rounded-lg hover:bg-[#79deeb] w-[60px] hover:text-black">
           {" "}
           Search
         </button>
@@ -80,10 +69,24 @@ function Browse() {
         </div>
         <div className="flex flex-wrap justify-center">
           {data.map((item) => (
-            <div key={item.id} className="max-w-sm w-full lg:w-1/3 p-4  ">
+            <div key={item.id} className="max-w-sm w-full lg:w-1/3 p-4">
               <div className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:cursor-pointer hover:bg-slate-400">
-                <Link href={`/Browse/${item.id}`}>
-                  <div className="p-6 " onClick={displayPage}>
+                {access ? (
+                  <Link href={`/Browse/${item.id}`}>
+                    <div className="p-6">
+                      <h2 className="text-xl font-bold mb-2">
+                        {item.BookName}
+                      </h2>
+                      <p className="text-gray-700 mb-2">
+                        <strong>Author:</strong> {item.Author}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>Genre:</strong> {item.Genre}
+                      </p>
+                    </div>
+                  </Link>
+                ) : (
+                  <div className="p-6" onClick={displayPage}>
                     <h2 className="text-xl font-bold mb-2">{item.BookName}</h2>
                     <p className="text-gray-700 mb-2">
                       <strong>Author:</strong> {item.Author}
@@ -92,7 +95,7 @@ function Browse() {
                       <strong>Genre:</strong> {item.Genre}
                     </p>
                   </div>
-                </Link>
+                )}
               </div>
             </div>
           ))}
