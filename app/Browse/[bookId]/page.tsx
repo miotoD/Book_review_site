@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { json } from "stream/consumers";
 
 function page({
   params,
@@ -48,6 +47,11 @@ function page({
     setComments([...comments, comment]);
     setComment("");
     console.log(" the comment list isL:", comments);
+  }
+
+  function deleteComments() {
+    localStorage.removeItem("comments");
+    window.location.reload();
   }
 
   return (
@@ -102,11 +106,19 @@ function page({
                 key={index}
                 className=" m-4 p-4 bg-white border-gray-300 rounded-lg font-semibold text-center"
               >
-                {comments}
+                comment{index}: {comments}
               </li>
             ))}
           </ul>
         </div>
+
+        <button
+          className=" bg-red-400 w-[160px] rounded-md hover:bg-red-600 hover:text-white"
+          onClick={deleteComments}
+        >
+          {" "}
+          Delete Comment
+        </button>
       </div>
     </div>
   );
